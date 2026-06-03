@@ -4,6 +4,7 @@ const TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 async function blobHeaders(contentType?: string) {
   const headers: Record<string, string> = {
     Authorization: `Bearer ${TOKEN}`,
+    "x-vercel-blob-access": "public",
   };
   if (contentType) {
     headers["x-vercel-blob-content-type"] = contentType;

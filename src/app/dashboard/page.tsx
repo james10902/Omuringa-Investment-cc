@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
-import { FileText, User, Bell, CheckCircle, Clock, AlertCircle, ChevronRight } from "lucide-react";
+import { FileText, User, Bell, CheckCircle, Clock, AlertCircle, ChevronRight, Upload, Send, ClipboardList } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
 const statusConfig: Record<string, { label: string; color: string; icon: typeof CheckCircle }> = {
@@ -22,11 +22,17 @@ export default async function DashboardPage() {
 
   const [application, documents, notifications] = await Promise.all([
     prisma.traineeApplication.findUnique({ where: { userId: user.id } }),
-    prisma.document.count({ where: { userId: user.id } }),
+    prisma.document.findMany({ where: { userId: user.id }, select: { type: true } }),
     prisma.notification.count({ where: { userId: user.id, read: false } }),
   ]);
 
   const statusInfo = application ? statusConfig[application.status] : null;
+  const uploadedDocTypes: string[] = documents.map((d) => d.type as string);
+  const requiredDocs = ["CV", "CERTIFIED_ID", "SCHOOL_CERTIFICATE", "CERTIFICATE_OF_CONDUCT"];
+  const requiredDocsUploaded = requiredDocs.filter((t) => uploadedDocTypes.includes(t));
+  const docsComplete = requiredDocsUploaded.length === requiredDocs.length;
+  const formComplete = application && application.firstName && application.lastName && application.idNumber && application.motivation;
+  const isSubmitted = application && application.status !== "DRAFT";
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -59,7 +65,7 @@ export default async function DashboardPage() {
               <FileText className="w-5 h-5 text-gold-700" />
             </div>
             <div>
-              <div className="text-2xl font-bold text-gray-900">{documents}</div>
+              <div className="text-2xl font-bold text-gray-900">{documents.length}</div>
               <div className="text-sm text-gray-500">Documents</div>
             </div>
           </div>
@@ -77,43 +83,116 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Application Status */}
+      {/* Application Progress */}
       <div className="card p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-bold text-gray-900">Application Status</h3>
+          <h3 className="font-bold text-gray-900">
+            {isSubmitted ? "Application Status" : "Your Progress"}
+          </h3>
           <Link href="/dashboard/application" className="text-brand-700 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-            View Details <ChevronRight className="w-4 h-4" />
+            {isSubmitted ? "View Details" : "Go to Application"} <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {application ? (
+        {isSubmitted ? (
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <span className={`badge ${statusInfo?.color}`}>
                 {statusInfo?.label}
               </span>
               <span className="text-sm text-gray-500">
-                Last updated: {formatDate(application.updatedAt)}
+                Last updated: {formatDate(application!.updatedAt)}
               </span>
             </div>
-            {application.adminNotes && (
+            {application!.adminNotes && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800">
-                <strong>Note from admin:</strong> {application.adminNotes}
+                <strong>Note from admin:</strong> {application!.adminNotes}
               </div>
             )}
-            {application.status === "DRAFT" && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800">
-                Your application is saved as a draft. Complete and submit it to begin the review process.
-              </div>
-            )}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-800">
+              Your application has been submitted. Our team will review it and notify you of any updates.
+            </div>
           </div>
         ) : (
-          <div className="text-center py-6">
-            <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-600 mb-4">You haven&apos;t started your training application yet.</p>
-            <Link href="/dashboard/application" className="btn-primary">
-              Start Application
-            </Link>
+          <div className="space-y-3">
+            {/* Progress bar */}
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+              <div
+                className="bg-brand-600 h-2.5 rounded-full transition-all"
+                style={{ width: `${[true, !!formComplete, docsComplete, false].filter(Boolean).length * 25}%` }}
+              />
+            </div>
+
+            {/* Step 1 — Account */}
+            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
+              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+              <div>
+                <div className="font-medium text-gray-900 text-sm">Create your account</div>
+                <div className="text-xs text-gray-500">Done — you&apos;re logged in as {user.name}</div>
+              </div>
+            </div>
+
+            {/* Step 2 — Application form */}
+            {formComplete ? (
+              <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-900 text-sm">Fill in your application</div>
+                  <div className="text-xs text-gray-500">Personal details completed</div>
+                </div>
+              </div>
+            ) : (
+              <Link href="/dashboard/application" className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">
+                <ClipboardList className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900 text-sm">Fill in your application</div>
+                  <div className="text-xs text-gray-500">Enter your personal details, education, and motivation</div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-blue-400" />
+              </Link>
+            )}
+
+            {/* Step 3 — Documents */}
+            {docsComplete ? (
+              <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-900 text-sm">Upload required documents</div>
+                  <div className="text-xs text-gray-500">All 4 required documents uploaded</div>
+                </div>
+              </div>
+            ) : (
+              <Link href="/dashboard/documents" className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">
+                <Upload className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900 text-sm">Upload required documents</div>
+                  <div className="text-xs text-gray-500">
+                    {requiredDocsUploaded.length} of {requiredDocs.length} uploaded — CV, ID, Certificate, Conduct
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-blue-400" />
+              </Link>
+            )}
+
+            {/* Step 4 — Submit */}
+            {formComplete && docsComplete ? (
+              <Link href="/dashboard/application" className="flex items-center gap-3 p-3 bg-brand-50 rounded-lg border border-brand-200 hover:bg-brand-100 transition-colors">
+                <Send className="w-5 h-5 text-brand-700 flex-shrink-0" />
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900 text-sm">Submit your application</div>
+                  <div className="text-xs text-gray-500">Everything looks good — ready to submit!</div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-brand-400" />
+              </Link>
+            ) : (
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 opacity-60">
+                <Send className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-500 text-sm">Submit your application</div>
+                  <div className="text-xs text-gray-400">Complete the steps above first</div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

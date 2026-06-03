@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CheckCircle, Save, Send } from "lucide-react";
+import { CheckCircle, Save, Send, FileText, Upload, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 const statusConfig: Record<string, { label: string; color: string }> = {
   DRAFT: { label: "Draft", color: "badge-gray" },
@@ -26,6 +27,13 @@ const empty: AppData = {
   motivation: "", previousExperience: "", preferredStartDate: "",
 };
 
+const REQUIRED_DOCS = [
+  { type: "CV", label: "Comprehensive CV" },
+  { type: "CERTIFIED_ID", label: "Certified Copy of ID" },
+  { type: "SCHOOL_CERTIFICATE", label: "School Leaving Certificate" },
+  { type: "CERTIFICATE_OF_CONDUCT", label: "Certificate of Conduct" },
+];
+
 export default function ApplicationPage() {
   const [form, setForm] = useState<AppData>(empty);
   const [status, setStatus] = useState<string | null>(null);
@@ -33,16 +41,20 @@ export default function ApplicationPage() {
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [loading, setLoading] = useState(true);
+  const [docs, setDocs] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch("/api/application")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.application) {
-          setForm({ ...empty, ...data.application });
-          setStatus(data.application.status);
-          setAdminNotes(data.application.adminNotes);
+    Promise.all([
+      fetch("/api/application").then((r) => r.json()),
+      fetch("/api/documents").then((r) => r.json()),
+    ])
+      .then(([appData, docData]) => {
+        if (appData.application) {
+          setForm({ ...empty, ...appData.application });
+          setStatus(appData.application.status);
+          setAdminNotes(appData.application.adminNotes);
         }
+        setDocs((docData.documents || []).map((d: any) => d.type));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -274,6 +286,38 @@ export default function ApplicationPage() {
           </div>
         </div>
 
+        {/* Documents Checklist */}
+        {!isReadOnly && (
+          <div className="card p-6">
+            <h3 className="font-bold text-gray-900 mb-4">Required Documents</h3>
+            <p className="text-gray-600 text-sm mb-4">
+              You must upload all 4 documents before submitting your application.
+            </p>
+            <div className="space-y-2 mb-4">
+              {REQUIRED_DOCS.map((doc) => {
+                const uploaded = docs.includes(doc.type);
+                return (
+                  <div key={doc.type} className={`flex items-center gap-3 p-3 rounded-lg border ${uploaded ? "bg-green-50 border-green-200" : "bg-gray-50 border-gray-200"}`}>
+                    {uploaded ? (
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                    )}
+                    <span className={`text-sm ${uploaded ? "text-gray-900" : "text-gray-500"}`}>
+                      {doc.label}
+                    </span>
+                    {uploaded && <span className="text-xs text-green-700 font-medium ml-auto">Uploaded</span>}
+                  </div>
+                );
+              })}
+            </div>
+            <Link href="/dashboard/documents" className="btn-secondary text-sm inline-flex items-center gap-2">
+              <Upload className="w-4 h-4" />
+              {docs.length === 0 ? "Upload Documents" : "Manage Documents"}
+            </Link>
+          </div>
+        )}
+
         {/* Actions */}
         {!isReadOnly && (
           <div className="flex flex-wrap gap-3">
@@ -284,7 +328,7 @@ export default function ApplicationPage() {
               {saveStatus === "saving" ? "Saving..." : saveStatus === "saved" ? "Saved!" : "Save Draft"}
             </button>
             <button type="submit" className="btn-primary flex items-center gap-2"
-              disabled={submitStatus === "loading"}>
+              disabled={submitStatus === "loading" || REQUIRED_DOCS.some((d) => !docs.includes(d.type))}>
               <Send className="w-4 h-4" />
               {submitStatus === "loading" ? "Submitting..." : "Submit Application"}
             </button>

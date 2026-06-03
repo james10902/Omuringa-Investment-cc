@@ -41,6 +41,21 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Check required documents
+    const requiredDocTypes = ["CV", "CERTIFIED_ID", "SCHOOL_CERTIFICATE", "CERTIFICATE_OF_CONDUCT"];
+    const uploadedDocs = await prisma.document.findMany({
+      where: { userId: user.id },
+      select: { type: true },
+    });
+    const uploadedTypes = uploadedDocs.map((d) => d.type) as string[];
+    const missing = requiredDocTypes.filter((t) => !uploadedTypes.includes(t));
+    if (missing.length > 0) {
+      return NextResponse.json(
+        { error: `Missing required documents: ${missing.join(", ")}` },
+        { status: 400 }
+      );
+    }
   }
 
   const existing = await prisma.traineeApplication.findUnique({
