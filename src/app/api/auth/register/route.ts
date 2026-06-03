@@ -9,9 +9,11 @@ import { registerSchema } from "@/lib/validations";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log("[REGISTER] Received body:", body);
     const parsed = registerSchema.safeParse(body);
 
     if (!parsed.success) {
+      console.log("[REGISTER] Zod errors:", parsed.error.errors);
       return NextResponse.json(
         { error: parsed.error.errors[0].message },
         { status: 400 }
