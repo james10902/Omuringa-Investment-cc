@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, FileText, Trash2, CheckCircle } from "lucide-react";
+import { Upload, FileText, Trash2, CheckCircle, ExternalLink } from "lucide-react";
 
 const DOC_TYPES = [
   { value: "CV", label: "Comprehensive CV" },
@@ -18,6 +18,7 @@ interface Doc {
   name: string;
   type: string;
   fileName: string;
+  filePath: string;
   fileSize: number;
   createdAt: string;
 }
@@ -168,7 +169,15 @@ export default function DocumentsPage() {
               <div key={doc.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                 <FileText className="w-8 h-8 text-brand-600 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-gray-900 text-sm truncate">{doc.name}</div>
+                  <a
+                    href={doc.filePath}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-gray-900 text-sm truncate hover:text-brand-700 flex items-center gap-1"
+                  >
+                    {doc.name}
+                    <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                  </a>
                   <div className="text-gray-500 text-xs">
                     {DOC_TYPES.find((d) => d.value === doc.type)?.label} • {formatSize(doc.fileSize)}
                   </div>

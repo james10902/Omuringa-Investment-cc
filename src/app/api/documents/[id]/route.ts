@@ -3,8 +3,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionByToken } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { unlink } from "fs/promises";
-import path from "path";
+import { del } from "@vercel/blob";
 
 export async function DELETE(
   req: NextRequest,
@@ -24,12 +23,13 @@ export async function DELETE(
     return NextResponse.json({ error: "Document not found." }, { status: 404 });
   }
 
-  // Delete file from disk
-  try {
-    const fullPath = path.join(process.cwd(), "public", document.filePath);
-    await unlink(fullPath);
-  } catch {
-    // File may not exist on disk — continue
+  // Delete file from blob storage
+  if (document.filePath) {
+    try {
+      await del(document.filePath);
+    } catch {
+      // Blob may not exist — continue
+    }
   }
 
   await prisma.document.delete({ where: { id: params.id } });
