@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ["bcryptjs", "nodemailer", "@prisma/client"],
-
   images: {
     remotePatterns: [],
   },

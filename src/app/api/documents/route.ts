@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionByToken } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { put } from "@vercel/blob";
+import { uploadToBlob } from "@/lib/blob";
 
 async function getUser(req: NextRequest) {
   const token = req.cookies.get("session_token")?.value;
@@ -56,10 +56,11 @@ export async function POST(req: NextRequest) {
     const fileName = `${type}_${Date.now()}.${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    const blob = await put(`documents/${user.id}/${fileName}`, buffer, {
-      access: "public",
-      contentType: file.type,
-    });
+    const blobUrl = await uploadToBlob(
+      `documents/${user.id}/${fileName}`,
+      buffer,
+      file.type
+    );
 
     const application = await prisma.traineeApplication.findUnique({
       where: { userId: user.id },
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest) {
         name: file.name,
         type: type as any,
         fileName,
-        filePath: blob.url,
+        filePath: blobUrl,
         fileSize: file.size,
         mimeType: file.type,
       },

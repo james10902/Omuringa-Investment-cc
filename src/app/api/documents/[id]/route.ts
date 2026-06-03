@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionByToken } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { del } from "@vercel/blob";
+import { deleteFromBlob } from "@/lib/blob";
 
 export async function DELETE(
   req: NextRequest,
@@ -26,7 +26,7 @@ export async function DELETE(
   // Delete file from blob storage
   if (document.filePath) {
     try {
-      await del(document.filePath);
+      await deleteFromBlob(document.filePath);
     } catch {
       // Blob may not exist — continue
     }
