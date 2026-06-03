@@ -1,4 +1,5 @@
 import { Star, Quote } from "lucide-react";
+import { Carousel } from "@/components/ui/carousel";
 
 const testimonials = [
   {
@@ -46,11 +47,11 @@ export function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <Carousel autoPlay autoPlayInterval={6000}>
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="bg-white rounded-3xl p-7 shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
+              className="bg-white rounded-3xl p-7 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 flex flex-col max-w-xl mx-auto"
             >
               {/* Quote icon */}
               <div className="mb-4">
@@ -81,7 +82,7 @@ export function TestimonialsSection() {
               </div>
             </div>
           ))}
-        </div>
+        </Carousel>
       </div>
     </section>
   );

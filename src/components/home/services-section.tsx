@@ -48,11 +48,11 @@ export function ServicesSection() {
               <p className="text-gray-500 text-sm">Professional protection for businesses and institutions</p>
             </div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide -mx-4 px-4">
             {securityServices.map((service) => (
               <div
                 key={service.title}
-                className="group relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-brand-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+                className="group relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-brand-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 snap-start flex-shrink-0 w-72 sm:w-80"
               >
                 <div className="w-12 h-12 bg-brand-50 group-hover:bg-brand-100 rounded-xl flex items-center justify-center mb-4 transition-colors">
                   <service.icon className="w-6 h-6 text-brand-700" />
@@ -78,11 +78,11 @@ export function ServicesSection() {
               <p className="text-gray-500 text-sm">Additional services to grow your business</p>
             </div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide -mx-4 px-4">
             {businessServices.map((service) => (
               <div
                 key={service.title}
-                className="group bg-white border border-gray-100 rounded-2xl p-5 hover:border-gold-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+                className="group bg-white border border-gray-100 rounded-2xl p-5 hover:border-gold-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 snap-start flex-shrink-0 w-64 sm:w-72"
               >
                 <div className="w-10 h-10 bg-gold-50 group-hover:bg-gold-100 rounded-xl flex items-center justify-center mb-3 transition-colors">
                   <service.icon className="w-5 h-5 text-gold-700" />
