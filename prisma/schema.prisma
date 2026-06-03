@@ -1,4 +1,4 @@
-// Omuringa Investment CC - Prisma Schema
+// Omuringa Investment CC - Prisma Schema v2
 // Security Services, Business Support & Training Academy
 
 generator client {
