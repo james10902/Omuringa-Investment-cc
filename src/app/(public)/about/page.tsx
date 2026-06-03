@@ -156,18 +156,51 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Photo Gallery */}
+      <section className="py-10 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">Our Work in Action</h2>
+            <p className="text-gray-500 mt-2 text-sm">A glimpse into Omuringa Investment CC</p>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-5">
+            <div className="relative rounded-2xl overflow-hidden h-64 shadow-lg group">
+              <Image
+                src="/Images/IMG-20260602-WA0022.jpg"
+                alt="Omuringa Investment CC — in action"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-950/60 to-transparent" />
+              <div className="absolute bottom-4 left-4 text-white">
+                <div className="text-xs text-gold-400 font-bold uppercase tracking-wider">Omuringa</div>
+                <div className="text-sm font-bold">Investment CC</div>
+              </div>
+            </div>
+            <div className="relative rounded-2xl overflow-hidden h-64 shadow-lg group">
+              <Image
+                src="/Images/IMG-20260602-WA0023.jpg"
+                alt="Omuringa Investment CC — our team"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-950/60 to-transparent" />
+              <div className="absolute bottom-4 left-4 text-white">
+                <div className="text-xs text-gold-400 font-bold uppercase tracking-wider">Our Team</div>
+                <div className="text-sm font-bold">Dedicated &amp; Professional</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Director */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            {/* Director photo */}
-            <div className="relative w-36 h-36 mx-auto mb-5 rounded-full overflow-hidden border-4 border-brand-100 shadow-xl">
-              <Image
-                src="/Images/IMG-20260602-WA0022.jpg"
-                alt={COMPANY.director}
-                fill
-                className="object-cover object-top"
-              />
+            {/* Initials avatar — replace with photo when available */}
+            <div className="w-28 h-28 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-5 border-4 border-brand-200 shadow-lg">
+              <span className="text-brand-700 font-extrabold text-3xl">UT</span>
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-1">{COMPANY.director}</h2>
             <p className="text-brand-700 font-medium mb-4">Director, Omuringa Investment CC</p>
