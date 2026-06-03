@@ -70,8 +70,14 @@ export function AboutSection() {
 
             {/* Director floating card */}
             <div className="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-xl p-4 border border-gray-100 flex items-center gap-3 max-w-[220px]">
-              <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-brand-700 font-extrabold text-base">UT</span>
+              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-brand-100">
+                <SafeImage
+                  src="/Images/IMG-20260602-WA0022.jpg"
+                  alt={COMPANY.director}
+                  fill
+                  className="object-cover"
+                  fallbackClassName="w-full h-full bg-brand-100 flex items-center justify-center"
+                />
               </div>
               <div>
                 <div className="text-xs font-bold text-gray-900 leading-tight">{COMPANY.director}</div>

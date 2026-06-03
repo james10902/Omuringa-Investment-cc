@@ -76,11 +76,26 @@ export default function AboutPage() {
                 <Link href="/contact" className="btn-secondary">Contact Us</Link>
               </div>
             </div>
-            <div className="bg-gray-50 rounded-2xl p-8">
-              <div className="space-y-6">
+            <div className="space-y-4">
+              {/* Staff photo */}
+              <div className="relative w-full h-52 rounded-2xl overflow-hidden shadow-lg">
+                <Image
+                  src="/Images/IMG-20260602-WA0023.jpg"
+                  alt="Omuringa Investment CC team"
+                  fill
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-950/60 to-transparent" />
+                <div className="absolute bottom-3 left-4 text-white">
+                  <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">Our Team</div>
+                  <div className="text-sm font-bold">Omuringa Investment CC</div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Target className="w-6 h-6 text-brand-700" />
+                  <div className="w-10 h-10 bg-brand-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Target className="w-5 h-5 text-brand-700" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Our Mission</h3>
@@ -91,8 +106,8 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Eye className="w-6 h-6 text-gold-700" />
+                  <div className="w-10 h-10 bg-gold-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Eye className="w-5 h-5 text-gold-700" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Our Vision</h3>
@@ -103,8 +118,8 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-6 h-6 text-green-700" />
+                  <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Heart className="w-5 h-5 text-green-700" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Our Commitment</h3>
@@ -145,12 +160,13 @@ export default function AboutPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="relative w-24 h-24 mx-auto mb-4 bg-brand-50 rounded-full overflow-hidden border-4 border-brand-100">
+            {/* Director photo */}
+            <div className="relative w-36 h-36 mx-auto mb-5 rounded-full overflow-hidden border-4 border-brand-100 shadow-xl">
               <Image
-                src="/Images/Logo.png"
-                alt="Omuringa Investment CC"
+                src="/Images/IMG-20260602-WA0022.jpg"
+                alt={COMPANY.director}
                 fill
-                className="object-contain p-3"
+                className="object-cover object-top"
               />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-1">{COMPANY.director}</h2>
