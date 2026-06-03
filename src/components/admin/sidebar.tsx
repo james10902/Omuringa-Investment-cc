@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import { SafeImage } from "@/components/ui/safe-image";
 import {
   LayoutDashboard, Users, FileText, MessageSquare, Settings,
-  LogOut, ChevronLeft, Globe
+  LogOut, ChevronLeft, Globe, Shield
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";

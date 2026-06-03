@@ -2,6 +2,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { Bell, CheckCircle } from "lucide-react";
+
+export const dynamic = 'force-dynamic';
 import { formatDateTime } from "@/lib/utils";
 
 export default async function NotificationsPage() {

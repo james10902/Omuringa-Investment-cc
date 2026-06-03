@@ -3,6 +3,8 @@ import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import { Search } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 const statusConfig: Record<string, { label: string; color: string }> = {
   DRAFT: { label: "Draft", color: "badge-gray" },
   SUBMITTED: { label: "Submitted", color: "badge-blue" },

@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import { SafeImage } from "@/components/ui/safe-image";
-import { LayoutDashboard, User, FileText, Bell, LogOut, ChevronLeft } from "lucide-react";
+import { LayoutDashboard, User, FileText, Bell, LogOut, ChevronLeft, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 

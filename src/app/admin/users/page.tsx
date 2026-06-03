@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { Search, UserCheck, UserX } from "lucide-react";
+
+export const dynamic = 'force-dynamic';
 import { UserActionsButton } from "./user-actions-button";
 
 const statusConfig: Record<string, { label: string; color: string }> = {

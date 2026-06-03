@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { formatDateTime } from "@/lib/utils";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 const typeLabels: Record<string, string> = {
   CONTACT: "Contact",
   QUOTE_REQUEST: "Quote Request",

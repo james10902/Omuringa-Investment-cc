@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Users, FileText, MessageSquare, CheckCircle, Clock, AlertCircle } from "lucide-react";
+
+export const dynamic = 'force-dynamic';
 import { formatDate } from "@/lib/utils";
 
 export default async function AdminDashboardPage() {

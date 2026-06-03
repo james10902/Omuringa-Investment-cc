@@ -4,6 +4,8 @@ import { AdminSidebar } from "@/components/admin/sidebar";
 import { AdminHeader } from "@/components/admin/header";
 import { AdminMobileNav } from "@/components/admin/mobile-nav";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await requireAdmin();
 
