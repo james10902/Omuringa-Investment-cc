@@ -4,6 +4,13 @@ const nextConfig = {
     remotePatterns: [],
   },
 
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push("undici", "@vercel/blob");
+    }
+    return config;
+  },
+
   async headers() {
     return [
       {
