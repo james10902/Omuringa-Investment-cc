@@ -1,15 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Required for bcryptjs, nodemailer, sharp to work in server components
-  experimental: {
-    serverComponentsExternalPackages: ["bcryptjs", "nodemailer", "@prisma/client"],
-  },
+  serverExternalPackages: ["bcryptjs", "nodemailer", "@prisma/client"],
 
   images: {
     remotePatterns: [],
   },
 
-  // Security headers
   async headers() {
     return [
       {
@@ -24,7 +20,6 @@ const nextConfig = {
           },
         ],
       },
-      // Prevent search engines indexing uploaded user documents
       {
         source: "/uploads/(.*)",
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
@@ -33,4 +28,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
