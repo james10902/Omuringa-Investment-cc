@@ -55,7 +55,15 @@ export default async function DashboardPage() {
               <div className="text-2xl font-bold text-gray-900">
                 {application ? "1" : "0"}
               </div>
-              <div className="text-sm text-gray-500">Application</div>
+              <div className="text-sm text-gray-500">
+                {isSubmitted && statusInfo ? (
+                  <span className={`badge ${statusInfo.color} text-xs`}>
+                    {statusInfo.label}
+                  </span>
+                ) : (
+                  "Application"
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -95,22 +103,71 @@ export default async function DashboardPage() {
         </div>
 
         {isSubmitted ? (
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <span className={`badge ${statusInfo?.color}`}>
-                {statusInfo?.label}
-              </span>
-              <span className="text-sm text-gray-500">
-                Last updated: {formatDate(application!.updatedAt)}
-              </span>
+          <div className="space-y-4">
+            {/* Big status card */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 bg-green-50 border border-green-200 rounded-xl">
+              <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <CheckCircle className="w-7 h-7 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h4 className="font-bold text-gray-900">Application Submitted</h4>
+                  <span className={`badge ${statusInfo?.color}`}>
+                    {statusInfo?.label}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-600 mt-1">
+                  Submitted on {application!.submittedAt ? formatDate(application!.submittedAt) : formatDate(application!.updatedAt)}.
+                  Our team will review it and notify you of any updates.
+                </p>
+              </div>
             </div>
+
+            {/* Admin notes */}
             {application!.adminNotes && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
                 <strong>Note from admin:</strong> {application!.adminNotes}
               </div>
             )}
-            <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-800">
-              Your application has been submitted. Our team will review it and notify you of any updates.
+
+            {/* Status timeline */}
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div className="flex items-center gap-3 p-3 bg-white border rounded-lg">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">Application Received</div>
+                  <div className="text-xs text-gray-500">We have your application</div>
+                </div>
+              </div>
+              <div className={`flex items-center gap-3 p-3 border rounded-lg ${application!.status === "UNDER_REVIEW" || application!.status === "APPROVED" || application!.status === "REJECTED" || application!.status === "MORE_INFO_REQUIRED" ? "bg-white" : "bg-gray-50 opacity-70"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${application!.status === "UNDER_REVIEW" || application!.status === "APPROVED" || application!.status === "REJECTED" || application!.status === "MORE_INFO_REQUIRED" ? "bg-blue-100" : "bg-gray-200"}`}>
+                  <Clock className={`w-4 h-4 ${application!.status === "UNDER_REVIEW" || application!.status === "APPROVED" || application!.status === "REJECTED" || application!.status === "MORE_INFO_REQUIRED" ? "text-blue-600" : "text-gray-500"}`} />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">Under Review</div>
+                  <div className="text-xs text-gray-500">Team is reviewing your application</div>
+                </div>
+              </div>
+              <div className={`flex items-center gap-3 p-3 border rounded-lg ${application!.status === "APPROVED" || application!.status === "REJECTED" ? "bg-white" : "bg-gray-50 opacity-70"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${application!.status === "APPROVED" ? "bg-green-100" : application!.status === "REJECTED" ? "bg-red-100" : "bg-gray-200"}`}>
+                  {application!.status === "APPROVED" ? <CheckCircle className="w-4 h-4 text-green-600" /> : application!.status === "REJECTED" ? <AlertCircle className="w-4 h-4 text-red-600" /> : <Clock className="w-4 h-4 text-gray-500" />}
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">Decision</div>
+                  <div className="text-xs text-gray-500">{application!.status === "APPROVED" ? "You have been approved!" : application!.status === "REJECTED" ? "Application not successful" : "Awaiting final decision"}</div>
+                </div>
+              </div>
+              <div className={`flex items-center gap-3 p-3 border rounded-lg ${application!.status === "MORE_INFO_REQUIRED" ? "bg-orange-50 border-orange-200" : "bg-gray-50 opacity-70"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${application!.status === "MORE_INFO_REQUIRED" ? "bg-orange-100" : "bg-gray-200"}`}>
+                  <AlertCircle className={`w-4 h-4 ${application!.status === "MORE_INFO_REQUIRED" ? "text-orange-600" : "text-gray-500"}`} />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">More Info</div>
+                  <div className="text-xs text-gray-500">{application!.status === "MORE_INFO_REQUIRED" ? "Action required — see note above" : "No additional info needed"}</div>
+                </div>
+              </div>
             </div>
           </div>
         ) : (
@@ -207,7 +264,7 @@ export default async function DashboardPage() {
           <div>
             <div className="font-semibold text-gray-900">Training Application</div>
             <div className="text-sm text-gray-500">
-              {application ? "View or update your application" : "Start your application"}
+              {isSubmitted ? "Review your submitted application" : application ? "Continue your application" : "Start your application"}
             </div>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400 ml-auto" />

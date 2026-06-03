@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { CheckCircle, Save, Send, Upload, AlertCircle, Pencil, Eye, FileText } from "lucide-react";
 import Link from "next/link";
 
@@ -42,6 +43,7 @@ function formatDateDisplay(dateStr: string) {
 }
 
 export default function ApplicationPage() {
+  const router = useRouter();
   const [form, setForm] = useState<AppData>(empty);
   const [status, setStatus] = useState<string | null>(null);
   const [adminNotes, setAdminNotes] = useState<string | null>(null);
@@ -106,6 +108,7 @@ export default function ApplicationPage() {
         setSubmittedAt(data.application.submittedAt);
         setSubmitStatus("success");
         setEditMode(false);
+        router.refresh();
       } else {
         const err = await res.json().catch(() => ({}));
         alert(err.error || "Failed to submit. Please check all required fields.");
