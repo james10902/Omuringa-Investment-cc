@@ -6,19 +6,30 @@ import { CheckCircle, Mail, ArrowLeft } from "lucide-react";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
+    setErrorMsg("");
     try {
-      await fetch("/api/auth/forgot-password", {
+      const res = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-    } catch {}
-    setStatus("sent"); // Always show success
+      if (res.ok) {
+        setStatus("sent");
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setErrorMsg(data.error || "Something went wrong. Please try again.");
+        setStatus("error");
+      }
+    } catch {
+      setErrorMsg("Network error. Please check your connection and try again.");
+      setStatus("error");
+    }
   };
 
   return (
@@ -65,6 +76,11 @@ export default function ForgotPasswordPage() {
                     autoComplete="email"
                   />
                 </div>
+                {status === "error" && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                    {errorMsg}
+                  </div>
+                )}
                 <button
                   type="submit"
                   className="btn-primary w-full py-3.5"

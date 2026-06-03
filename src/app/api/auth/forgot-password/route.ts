@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     if (!email) return NextResponse.json({ success: true }); // Don't reveal if email exists
 
     const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) return NextResponse.json({ success: true }); // Silent
+    if (!user) return NextResponse.json({ success: true }); // Silent — don't reveal if email exists
 
     const token = generateToken();
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
@@ -57,6 +57,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Forgot password error:", error);
-    return NextResponse.json({ success: true }); // Always return success
+    // Only return error if we actually found the user but email failed
+    // This way we don't reveal whether the email exists
+    return NextResponse.json(
+      { error: "Unable to send reset email. Please try again later." },
+      { status: 500 }
+    );
   }
 }
