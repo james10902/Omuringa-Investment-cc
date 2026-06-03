@@ -8,6 +8,7 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
@@ -109,7 +110,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Contact form */}
+            {/* Contact form gh*/}
             <div className="lg:col-span-2 card p-8">
               <h2 className="text-xl font-bold text-gray-900 mb-5">Send Us a Message</h2>
 
