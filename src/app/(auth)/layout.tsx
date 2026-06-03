@@ -17,8 +17,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                 className="object-contain p-1"
                 priority
                 fallbackClassName="w-full h-full bg-brand-700 flex items-center justify-center"
-                fallbackContent={<Shield className="w-5 h-5 text-white" />}
-              />
+/>
             </div>
             <div>
               <div className="font-bold text-white text-sm leading-tight">Omuringa Investment CC</div>
@@ -40,3 +39,4 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     </div>
   );
 }
+

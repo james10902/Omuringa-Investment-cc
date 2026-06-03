@@ -29,8 +29,7 @@ export function HeroSection() {
                   className="object-contain p-1.5"
                   priority
                   fallbackClassName="w-full h-full bg-brand-700 flex items-center justify-center"
-                  fallbackContent={<Shield className="w-7 h-7 text-white" />}
-                />
+/>
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-white font-bold text-sm leading-tight">Omuringa Investment CC</span>
@@ -96,14 +95,7 @@ export function HeroSection() {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   fallbackClassName="w-full h-full bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center"
-                  fallbackContent={
-                    <div className="text-center text-white p-4">
-                      <GraduationCap className="w-10 h-10 text-gold-400 mx-auto mb-2" />
-                      <div className="text-xs font-semibold text-gold-400 uppercase tracking-wider">Week 1 & 2</div>
-                      <div className="text-sm font-bold mt-1">Theory Training</div>
-                    </div>
-                  }
-                />
+/>
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <div className="text-xs font-bold text-gold-400 uppercase tracking-wider mb-0.5">Week 1 & 2</div>
@@ -119,14 +111,7 @@ export function HeroSection() {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   fallbackClassName="w-full h-full bg-gradient-to-br from-brand-700 to-brand-900 flex items-center justify-center"
-                  fallbackContent={
-                    <div className="text-center text-white p-4">
-                      <Shield className="w-10 h-10 text-gold-400 mx-auto mb-2" />
-                      <div className="text-xs font-bold text-gold-400 uppercase tracking-wider mb-0.5">Week 3</div>
-                      <div className="text-sm font-bold">Tactical Training</div>
-                    </div>
-                  }
-                />
+/>
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <div className="text-xs font-bold text-gold-400 uppercase tracking-wider mb-0.5">Week 3</div>
@@ -143,17 +128,7 @@ export function HeroSection() {
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                 fallbackClassName="w-full h-full bg-gradient-to-r from-brand-900 to-brand-800 flex items-center justify-center"
-                fallbackContent={
-                  <div className="flex items-center gap-4 text-white px-6">
-                    <Briefcase className="w-10 h-10 text-gold-400 flex-shrink-0" />
-                    <div>
-                      <div className="text-xs font-bold text-gold-400 uppercase tracking-wider mb-0.5">Business Services</div>
-                      <div className="text-sm font-bold">Construction &amp; More</div>
-                      <div className="text-xs text-brand-300 mt-0.5">Graphic Design · Events · Accounting · Registration</div>
-                    </div>
-                  </div>
-                }
-              />
+/>
               <div className="absolute inset-0 bg-gradient-to-r from-brand-950/80 via-brand-950/30 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between">
                 <div>
@@ -192,3 +167,4 @@ export function HeroSection() {
     </section>
   );
 }
+

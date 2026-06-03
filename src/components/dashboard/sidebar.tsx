@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { SafeImage } from "@/components/ui/safe-image";
-import { LayoutDashboard, User, FileText, Bell, LogOut, ChevronLeft, Shield } from "lucide-react";
+import { LayoutDashboard, User, FileText, Bell, LogOut, ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -38,10 +38,13 @@ export function DashboardSidebar({ user }: Props) {
       <div className="p-4 border-b border-brand-800 flex items-center justify-between">
         {!collapsed && (
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative w-8 h-8 flex-shrink-0 bg-white rounded-lg overflow-hidden">
-              <SafeImage src="/Images/Logo.png" alt="Omuringa" fill className="object-contain p-0.5"
-                fallbackClassName="w-full h-full bg-brand-700 flex items-center justify-center"
-                fallbackContent={<Shield className="w-4 h-4 text-white" />}
+            <div className="relative w-8 h-8 flex-shrink-0 bg-brand-700 rounded-lg overflow-hidden">
+              <SafeImage
+                src="/Images/Logo.png"
+                alt="Omuringa"
+                fill
+                className="object-contain p-0.5"
+                fallbackClassName="w-full h-full bg-brand-700"
               />
             </div>
             <div className="min-w-0">
@@ -51,10 +54,13 @@ export function DashboardSidebar({ user }: Props) {
           </Link>
         )}
         {collapsed && (
-          <div className="relative w-8 h-8 flex-shrink-0 bg-white rounded-lg overflow-hidden mx-auto">
-            <SafeImage src="/Images/Logo.png" alt="Omuringa" fill className="object-contain p-0.5"
-              fallbackClassName="w-full h-full bg-brand-700 flex items-center justify-center"
-              fallbackContent={<Shield className="w-4 h-4 text-white" />}
+          <div className="relative w-8 h-8 flex-shrink-0 bg-brand-700 rounded-lg overflow-hidden mx-auto">
+            <SafeImage
+              src="/Images/Logo.png"
+              alt="Omuringa"
+              fill
+              className="object-contain p-0.5"
+              fallbackClassName="w-full h-full bg-brand-700"
             />
           </div>
         )}

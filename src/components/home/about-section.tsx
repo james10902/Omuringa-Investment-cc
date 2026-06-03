@@ -29,14 +29,7 @@ export function AboutSection() {
                 fill
                 className="object-cover"
                 fallbackClassName="w-full h-full bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center"
-                fallbackContent={
-                  <div className="text-center text-white p-8">
-                    <Shield className="w-16 h-16 text-gold-400 mx-auto mb-4" />
-                    <div className="text-2xl font-bold mb-2">Omuringa Investment CC</div>
-                    <div className="text-brand-300 text-sm italic">&ldquo;The eye of all trades&rdquo;</div>
-                  </div>
-                }
-              />
+/>
               {/* Dark overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-brand-950/20 to-transparent" />
 
@@ -49,8 +42,7 @@ export function AboutSection() {
                     fill
                     className="object-contain p-1"
                     fallbackClassName="w-full h-full bg-brand-700 flex items-center justify-center"
-                    fallbackContent={<Shield className="w-5 h-5 text-white" />}
-                  />
+/>
                 </div>
                 <div>
                   <div className="text-white font-bold text-xs leading-tight">Omuringa Investment CC</div>
@@ -134,3 +126,4 @@ export function AboutSection() {
     </section>
   );
 }
+

@@ -89,8 +89,7 @@ export function Navbar() {
                   className="object-contain"
                   priority
                   fallbackClassName="w-full h-full bg-brand-700 flex items-center justify-center"
-                  fallbackContent={<Shield className="w-5 h-5 text-white" />}
-                />
+/>
               </div>
               <div>
                 <div className="font-bold text-brand-900 text-sm leading-tight">
@@ -181,3 +180,4 @@ export function Navbar() {
     </>
   );
 }
+

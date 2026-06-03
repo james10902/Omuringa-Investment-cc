@@ -33,15 +33,7 @@ export function AcademySection() {
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-700"
               fallbackClassName="w-full h-full bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center"
-              fallbackContent={
-                <div className="text-center text-white p-8">
-                  <BookOpen className="w-14 h-14 text-gold-400 mx-auto mb-3" />
-                  <div className="text-gold-400 font-bold text-sm uppercase tracking-wider mb-1">Week 1 &amp; 2</div>
-                  <div className="text-xl font-bold">Theory &amp; Classroom</div>
-                  <div className="text-brand-300 text-sm mt-2">Security principles, legal frameworks, communication</div>
-                </div>
-              }
-            />
+/>
             <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent" />
             <div className="absolute top-4 left-4">
               <span className="bg-brand-700 text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
@@ -69,15 +61,7 @@ export function AcademySection() {
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-700"
               fallbackClassName="w-full h-full bg-gradient-to-br from-brand-700 to-brand-900 flex items-center justify-center"
-              fallbackContent={
-                <div className="text-center text-white p-8">
-                  <Users className="w-14 h-14 text-gold-400 mx-auto mb-3" />
-                  <div className="text-gold-400 font-bold text-sm uppercase tracking-wider mb-1">Week 3</div>
-                  <div className="text-xl font-bold">Physical &amp; Tactical</div>
-                  <div className="text-brand-300 text-sm mt-2">Patrol techniques, access control, emergency response</div>
-                </div>
-              }
-            />
+/>
             <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent" />
             <div className="absolute top-4 left-4">
               <span className="bg-gold-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
@@ -155,3 +139,4 @@ export function AcademySection() {
     </section>
   );
 }
+

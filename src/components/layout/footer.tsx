@@ -64,8 +64,7 @@ export function Footer() {
                   fill
                   className="object-contain p-0.5"
                   fallbackClassName="w-full h-full bg-brand-700 flex items-center justify-center"
-                  fallbackContent={<Shield className="w-5 h-5 text-white" />}
-                />
+/>
               </div>
               <div>
                 <div className="font-bold text-white text-sm leading-tight">
@@ -180,3 +179,4 @@ export function Footer() {
     </footer>
   );
 }
+
