@@ -36,10 +36,18 @@ export default function PricingPage() {
     e.preventDefault();
     setStatus("loading");
     try {
-      const res = await fetch("/api/contact", {
+      const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+      if (!formId) {
+        setStatus("error");
+        return;
+      }
+      const res = await fetch(`https://formspree.io/f/${formId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, type: "QUOTE_REQUEST", subject: `Quote Request: ${form.service}` }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...form,
+          _subject: `Quote Request: ${form.service}`,
+        }),
       });
       if (res.ok) {
         setStatus("success");

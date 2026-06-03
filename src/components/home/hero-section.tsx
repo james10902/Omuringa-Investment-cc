@@ -93,7 +93,7 @@ export function HeroSection() {
                   src="/Images/writing.png"
                   alt="Security training classroom"
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   fallbackClassName="w-full h-full bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent" />
@@ -109,7 +109,7 @@ export function HeroSection() {
                   src="/Images/Training.png"
                   alt="Security tactical training"
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   fallbackClassName="w-full h-full bg-gradient-to-br from-brand-700 to-brand-900 flex items-center justify-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent" />
@@ -125,7 +125,7 @@ export function HeroSection() {
                   src="/Images/Construction.png"
                   alt="Construction services"
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   fallbackClassName="w-full h-full bg-gradient-to-r from-brand-900 to-brand-800 flex items-center justify-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent" />

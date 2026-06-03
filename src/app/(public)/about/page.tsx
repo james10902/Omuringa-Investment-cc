@@ -83,7 +83,7 @@ export default function AboutPage() {
                   src="/Images/IMG-20260602-WA0023.jpg"
                   alt="Omuringa Investment CC team"
                   fill
-                  className="object-cover object-center"
+                  className="object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-950/60 to-transparent" />
                 <div className="absolute bottom-3 left-4 text-white">
@@ -169,7 +169,7 @@ export default function AboutPage() {
                 src="/Images/IMG-20260602-WA0022.jpg"
                 alt="Omuringa Investment CC — in action"
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-950/60 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">
@@ -182,7 +182,7 @@ export default function AboutPage() {
                 src="/Images/IMG-20260602-WA0023.jpg"
                 alt="Omuringa Investment CC — our team"
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-950/60 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">
