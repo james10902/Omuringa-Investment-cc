@@ -55,15 +55,7 @@ export function Navbar() {
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/login" className="hover:text-brand-300 transition-colors">
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="bg-brand-700 hover:bg-brand-600 px-3 py-1 rounded text-white transition-colors"
-            >
-              Register
-            </Link>
+            <span className="text-brand-300 text-xs">Keetmanshoop, Namibia</span>
           </div>
         </div>
       </div>
