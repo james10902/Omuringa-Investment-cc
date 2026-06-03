@@ -13,17 +13,12 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus("loading");
     try {
-      const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
-      if (!formId) {
-        setStatus("error");
-        return;
-      }
-      const res = await fetch(`https://formspree.io/f/${formId}`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          type: "CONTACT",
           ...form,
-          _subject: "Contact Form – Omuringa Investment CC",
         }),
       });
       if (res.ok) {
@@ -59,7 +54,7 @@ export default function ContactPage() {
             <div className="space-y-4">
               <h2 className="text-xl font-bold text-gray-900 mb-5">Get In Touch</h2>
 
-              <a href={`tel:${COMPANY.phone}`}
+              <a href={`tel:${COMPANY.phoneRaw}`}
                 className="flex items-start gap-4 p-5 bg-gray-50 rounded-xl border border-gray-100 hover:border-brand-200 hover:shadow-sm transition-all group">
                 <div className="w-12 h-12 bg-brand-100 group-hover:bg-brand-200 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors">
                   <Phone className="w-6 h-6 text-brand-700" />

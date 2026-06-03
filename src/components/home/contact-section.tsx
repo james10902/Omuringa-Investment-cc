@@ -53,7 +53,7 @@ export function ContactSection() {
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Contact info — 2 cols */}
           <div className="lg:col-span-2 space-y-4">
-            <a href={`tel:${COMPANY.phone}`}
+            <a href={`tel:${COMPANY.phoneRaw}`}
               className="flex items-center gap-4 p-5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-2xl transition-all group">
               <div className="w-12 h-12 bg-brand-700 rounded-xl flex items-center justify-center flex-shrink-0">
                 <Phone className="w-5 h-5 text-white" />

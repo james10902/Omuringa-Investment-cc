@@ -200,7 +200,7 @@ export default function TermsPage() {
               </div>
               <div>
                 <span className="text-gray-500">Phone: </span>
-                <a href={`tel:${COMPANY.phone}`} className="text-brand-700 hover:underline">
+                <a href={`tel:${COMPANY.phoneRaw}`} className="text-brand-700 hover:underline">
                   {COMPANY.phone}
                 </a>
               </div>

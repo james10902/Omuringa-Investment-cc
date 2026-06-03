@@ -105,7 +105,7 @@ export function AcademySection() {
             <div>
               <div className="font-bold text-gray-900 mb-1">Training Location</div>
               <p className="text-gray-600 text-sm leading-relaxed">{COMPANY.trainingLocation}</p>
-              <a href={`tel:${COMPANY.phone}`} className="text-brand-700 text-sm font-medium hover:underline mt-1 block">
+              <a href={`tel:${COMPANY.phoneRaw}`} className="text-brand-700 text-sm font-medium hover:underline mt-1 block">
                 {COMPANY.phone}
               </a>
             </div>

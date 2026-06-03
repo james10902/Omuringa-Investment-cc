@@ -156,6 +156,7 @@ export default function ApplicationPage() {
             <div>
               <label className="form-label">Date of Birth</label>
               <input type="date" className="form-input" value={form.dateOfBirth}
+                max={new Date().toISOString().split("T")[0]}
                 onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })}
                 disabled={!!isReadOnly} />
             </div>

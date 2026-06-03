@@ -52,7 +52,10 @@ export const trainingEnquirySchema = z.object({
 export const applicationSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
   lastName: z.string().min(2, "Last name is required"),
-  dateOfBirth: z.string().optional(),
+  dateOfBirth: z.string().optional().refine((val) => {
+    if (!val) return true;
+    return new Date(val) <= new Date();
+  }, { message: "Date of birth cannot be in the future" }),
   gender: z.string().optional(),
   nationality: z.string().optional(),
   idNumber: z.string().min(5, "ID number is required"),

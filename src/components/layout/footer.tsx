@@ -80,7 +80,7 @@ export function Footer() {
             </p>
             <div className="space-y-2">
               <a
-                href={`tel:${COMPANY.phone}`}
+                href={`tel:${COMPANY.phoneRaw}`}
                 className="flex items-center gap-2 text-brand-300 hover:text-white transition-colors text-sm"
               >
                 <Phone className="w-4 h-4 flex-shrink-0" />
@@ -141,7 +141,7 @@ export function Footer() {
                 {COMPANY.trainingLocation}
               </div>
               <a
-                href={`tel:${COMPANY.phone}`}
+                href={`tel:${COMPANY.phoneRaw}`}
                 className="flex items-center gap-2 hover:text-white transition-colors"
               >
                 <Phone className="w-4 h-4 flex-shrink-0" />

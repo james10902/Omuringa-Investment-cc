@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, FileText, CheckCircle, XCircle, Clock, AlertCircle, Save } from "lucide-react";
+import { ArrowLeft, FileText, CheckCircle, XCircle, Clock, AlertCircle, Save, Mail, Phone } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
 const statusOptions = [
@@ -197,6 +197,41 @@ export default function ApplicationDetailPage() {
             <div>
               <span className="text-gray-500">Reviewed By:</span>{" "}
               <span className="text-gray-900">{app.reviewedBy || "—"}</span>
+            </div>
+          </div>
+
+          {/* Contact applicant */}
+          <div className="card p-5 text-sm space-y-3">
+            <h4 className="font-semibold text-gray-900">Contact Applicant</h4>
+            <div>
+              <span className="text-gray-500">Email:</span>{" "}
+              <a href={`mailto:${app.email}`} className="text-brand-700 hover:underline">
+                {app.email}
+              </a>
+            </div>
+            <div>
+              <span className="text-gray-500">Phone:</span>{" "}
+              <a href={`tel:${app.phone?.replace(/\s/g, "")}`} className="text-brand-700 hover:underline">
+                {app.phone || "—"}
+              </a>
+            </div>
+            <div className="flex flex-col gap-2 pt-1">
+              <a
+                href={`mailto:${app.email}?subject=Re: Your Training Application`}
+                className="btn-primary text-xs py-2 px-3 flex items-center justify-center gap-1.5"
+              >
+                <Mail className="w-3.5 h-3.5" />
+                Reply via Email
+              </a>
+              {app.phone && (
+                <a
+                  href={`tel:${app.phone.replace(/\s/g, "")}`}
+                  className="btn-secondary text-xs py-2 px-3 flex items-center justify-center gap-1.5"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  Call
+                </a>
+              )}
             </div>
           </div>
         </div>

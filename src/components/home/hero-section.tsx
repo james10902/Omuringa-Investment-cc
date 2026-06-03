@@ -73,7 +73,7 @@ export function HeroSection() {
 
             {/* Contact info */}
             <div className="flex flex-wrap gap-5 text-sm text-brand-300 border-t border-white/10 pt-6">
-              <a href={`tel:${COMPANY.phone}`} className="flex items-center gap-2 hover:text-white transition-colors">
+              <a href={`tel:${COMPANY.phoneRaw}`} className="flex items-center gap-2 hover:text-white transition-colors">
                 <Phone className="w-4 h-4 text-gold-400" />
                 {COMPANY.phone}
               </a>

@@ -11,17 +11,12 @@ export function TrainingEnquiryForm() {
     e.preventDefault();
     setStatus("loading");
     try {
-      const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
-      if (!formId) {
-        setStatus("error");
-        return;
-      }
-      const res = await fetch(`https://formspree.io/f/${formId}`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          type: "TRAINING_ENQUIRY",
           ...form,
-          _subject: "Training Enquiry – Omuringa Security Training Academy",
         }),
       });
       if (res.ok) {

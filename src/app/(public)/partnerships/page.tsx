@@ -18,17 +18,12 @@ export default function PartnershipsPage() {
     e.preventDefault();
     setStatus("loading");
     try {
-      const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
-      if (!formId) {
-        setStatus("error");
-        return;
-      }
-      const res = await fetch(`https://formspree.io/f/${formId}`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          type: "PARTNERSHIP",
           ...form,
-          _subject: "Partnership Enquiry – Omuringa Investment CC",
         }),
       });
       if (res.ok) {

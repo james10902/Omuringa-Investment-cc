@@ -92,7 +92,7 @@ export default function AcademyPage() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/register" className="btn-gold">Apply Online Now</Link>
-              <a href={`tel:${COMPANY.phone}`} className="btn-outline-white">
+              <a href={`tel:${COMPANY.phoneRaw}`} className="btn-outline-white">
                 <Phone className="w-4 h-4" />
                 Call to Enquire
               </a>
@@ -247,7 +247,7 @@ export default function AcademyPage() {
                     <Phone className="w-5 h-5 text-brand-300 flex-shrink-0 mt-0.5" />
                     <div>
                       <div className="text-sm font-medium text-white">Phone / WhatsApp</div>
-                      <a href={`tel:${COMPANY.phone}`} className="text-brand-300 text-sm hover:text-white transition-colors">
+                      <a href={`tel:${COMPANY.phoneRaw}`} className="text-brand-300 text-sm hover:text-white transition-colors">
                         {COMPANY.phone}
                       </a>
                     </div>

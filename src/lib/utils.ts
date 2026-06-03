@@ -41,7 +41,7 @@ export const COMPANY = {
   academy: "Omuringa Security Training Academy",
   director: "Mr Uepesuvera Tjiharuka",
   phone: "+264 81 728 6079",
-  phoneRaw: "+26481728 6079",
+  phoneRaw: "+264817286079",
   whatsapp: "https://wa.me/264817286079",
   email: "uepesuverat@gmail.com",
   location: "Tseigratse, Keetmanshoop, Namibia",

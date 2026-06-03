@@ -2,7 +2,6 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendFormNotification } from "@/lib/email";
 import { z } from "zod";
 
 const schema = z.object({
@@ -28,6 +27,7 @@ export async function POST(req: NextRequest) {
 
     const { type, name, email, phone, company, subject, message, service, preferredContact } = parsed.data;
 
+    // Save to database
     await prisma.formSubmission.create({
       data: {
         type,
@@ -42,18 +42,25 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Notify admin (non-blocking)
-    const notifData: Record<string, string> = {
-      "Form Type": type,
-      Name: name,
-      Email: email,
-      ...(phone && { Phone: phone }),
-      ...(company && { Company: company }),
-      ...(service && { Service: service }),
-      ...(preferredContact && { "Preferred Contact": preferredContact }),
-      Message: message,
-    };
-    sendFormNotification(type.replace(/_/g, " "), notifData).catch(console.error);
+    // Forward to Formspree for email delivery (non-blocking)
+    const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+    if (formId) {
+      fetch(`https://formspree.io/f/${formId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          company,
+          subject: subject || `${type.replace(/_/g, " ")} – Omuringa Investment CC`,
+          message,
+          service,
+          "preferred-contact": preferredContact,
+          _subject: `${type.replace(/_/g, " ")} – ${name}`,
+        }),
+      }).catch((err) => console.error("Formspree forward error:", err));
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
