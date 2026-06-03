@@ -1,0 +1,180 @@
+// Omuringa Investment CC - Prisma Schema
+// Security Services, Business Support & Training Academy
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum UserRole {
+  SUPER_ADMIN
+  CONTENT_ADMIN
+  APPLICATION_ADMIN
+  TRAINEE
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  MORE_INFO_REQUIRED
+}
+
+enum DocumentType {
+  CV
+  CERTIFIED_ID
+  SCHOOL_CERTIFICATE
+  CERTIFICATE_OF_CONDUCT
+  SUPPORTIVE_DOCUMENT
+  OTHER
+}
+
+enum FormType {
+  CONTACT
+  QUOTE_REQUEST
+  PARTNERSHIP
+  TRAINING_ENQUIRY
+}
+
+// ─── Auth Models ──────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  phone         String?
+  password      String
+  role          UserRole  @default(TRAINEE)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions     Session[]
+  application  TraineeApplication?
+  documents    Document[]
+  notifications Notification[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ─── Trainee Application ──────────────────────────────────────────────────────
+
+model TraineeApplication {
+  id                String            @id @default(cuid())
+  userId            String            @unique
+  // Personal Details
+  firstName         String
+  lastName          String
+  dateOfBirth       DateTime?
+  gender            String?
+  nationality       String?
+  idNumber          String?
+  phone             String
+  email             String
+  address           String?
+  city              String?
+  // Education
+  highestQualification String?
+  schoolName        String?
+  yearCompleted     String?
+  // Application
+  motivation        String?           @db.Text
+  previousExperience String?          @db.Text
+  preferredStartDate DateTime?
+  // Status
+  status            ApplicationStatus @default(DRAFT)
+  adminNotes        String?           @db.Text
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  submittedAt       DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documents Document[]
+}
+
+// ─── Documents ────────────────────────────────────────────────────────────────
+
+model Document {
+  id            String       @id @default(cuid())
+  userId        String
+  applicationId String?
+  name          String
+  type          DocumentType @default(OTHER)
+  fileName      String
+  filePath      String
+  fileSize      Int
+  mimeType      String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application TraineeApplication? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+}
+
+// ─── Forms / Submissions ──────────────────────────────────────────────────────
+
+model FormSubmission {
+  id        String   @id @default(cuid())
+  type      FormType
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  subject   String?
+  message   String   @db.Text
+  service   String?
+  metadata  Json?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ─── Notifications ────────────────────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── Site Content (Admin-manageable) ─────────────────────────────────────────
+
+model SiteContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  label     String?
+  updatedAt DateTime @updatedAt
+}
